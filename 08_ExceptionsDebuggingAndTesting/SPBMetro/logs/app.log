@@ -1,0 +1,12 @@
+2020-04-21 20:19:02 [main] ERROR  - sdf
+java.lang.Exception: error
+	at Main.main(Main.java:39) [classes/:?]
+2020-04-21 20:20:42 [main] ERROR  - error
+java.lang.Exception: error
+	at Main.main(Main.java:39) [classes/:?]
+2020-04-21 20:21:23 [main] ERROR  - null
+java.lang.NullPointerException: null
+	at Main.main(Main.java:39) [classes/:?]
+2020-04-22 18:35:44.768 [main] ERROR Main - Throwing
+java.lang.NullPointerException: null
+	at Main.main(Main.java:38) [classes/:?]
