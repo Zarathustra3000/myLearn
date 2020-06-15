@@ -1,13 +1,15 @@
-
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Courses")
-public class Course {
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -19,22 +21,49 @@ public class Course {
 
     private String description;
 
-    @Column(name = "teacher_id")
-    private int teacherId;
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    } ,fetch = FetchType.LAZY)
+    @JoinTable(name = "TeachersCourse",
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "teacher_id")}
+    )
+    private List<Teacher> teachers = new ArrayList<>();
 
     @Column(name = "students_count")
-    private int studentsCount;
+    private Integer studentsCount;
 
     private int price;
 
     @Column(name = "price_per_hour")
     private float pricePerHour;
 
-    public int getId() {
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Subscriptions",
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")}
+    )
+    private List<Student> students;
+
+    public Course(String name, int duration, CourseType type, String description, Integer studentsCount, int price, float pricePerHour) {
+        this.name = name;
+        this.duration = duration;
+        this.type = type;
+        this.description = description;
+        this.studentsCount = studentsCount;
+        this.price = price;
+        this.pricePerHour = pricePerHour;
+    }
+
+    public Course() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -70,19 +99,25 @@ public class Course {
         this.description = description;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void addTeacher(Teacher teacher) {
+        teachers.add(teacher);
+        teacher.getCourses().add(this);
     }
 
-    public int getStudentsCount() {
+    public void removeTeacher(Teacher teacher) {
+        teachers.remove(teacher);
+        teacher.getCourses().remove(this);
+    }
+
+    public Integer getStudentsCount() {
         return studentsCount;
     }
 
-    public void setStudentsCount(int studentsCount) {
+    public void setStudentsCount(Integer studentsCount) {
         this.studentsCount = studentsCount;
     }
 
@@ -100,6 +135,10 @@ public class Course {
 
     public void setPricePerHour(float pricePerHour) {
         this.pricePerHour = pricePerHour;
+    }
+
+    public List<Student> getStudents() {
+        return students;
     }
 
 }

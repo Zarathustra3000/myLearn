@@ -1,14 +1,15 @@
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "Students")
-public class Student {
+public class Student implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -17,11 +18,20 @@ public class Student {
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    public int getId() {
+    public Student(String name, int age, Date registrationDate) {
+        this.name = name;
+        this.age = age;
+        this.registrationDate = registrationDate;
+    }
+
+    public Student() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

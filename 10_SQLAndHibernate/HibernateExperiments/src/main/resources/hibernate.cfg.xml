@@ -22,5 +22,11 @@
 
         <mapping class="Course"/>
         <mapping class="Student"/>
+        <mapping class="Teacher"/>
+        <mapping class="Subscription"/>
+        <mapping class="PurchaseList"/>
+        <mapping class="NotificationStudentWork"/>
+        <mapping class="NotificationTeacherAddCourse"/>
+        <mapping class="NotificationStudComment"/>
     </session-factory>
 </hibernate-configuration>
