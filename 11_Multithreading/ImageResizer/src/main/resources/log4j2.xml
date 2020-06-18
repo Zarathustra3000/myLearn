@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <File name="InvalidFiles" fileName="logs/invalidFiles.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+            <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
+        </File>
+
+        <File name="LogError" fileName="logs/app.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <!--appender-ref ref="Console" level="trace"/-->
+            <appender-ref ref="InvalidFiles" level="warn"/>
+            <appender-ref ref="LogError" level="error"/>
+        </root>
+    </loggers>
+
+</configuration>
